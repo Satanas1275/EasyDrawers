@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "easydrawers:block/basic_drawer_face"
+  }
+}

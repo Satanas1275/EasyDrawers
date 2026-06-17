@@ -1,0 +1,123 @@
+plugins {
+    id "fabric-loom" version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+loom {
+    productionNamespace = "official"
+}
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:intermediary:0.0.0:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation fileTree(dir: "libs", include: "*.jar")
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "loader_version", project.loader_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "fabric_version", project.fabric_version
+    inputs.property "java_version", project.java_version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "loader_version": project.loader_version,
+                "minecraft_version": project.minecraft_version,
+                "fabric_version": project.fabric_version,
+                "java_version": project.java_version
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(project.java_version)
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
+
+// Patch classTweaker namespace in remapped Fabric API jars
+// Workaround for Loom changing "official" to "named" during remapping
+tasks.named("runClient") {
+    doFirst {
+        def remappedDir = file(".gradle/loom-cache/remapped_mods/remapped/unspecified")
+        if (remappedDir.exists()) {
+            remappedDir.eachDir { modDir ->
+                modDir.eachDir { versionDir ->
+                    versionDir.listFiles().each { jarFile ->
+                        if (jarFile.name.endsWith(".jar")) {
+                            def tempFile = new File(jarFile.parent, "${jarFile.name}.tmp")
+                            def modified = false
+                            
+                            def jarStream = new java.util.jar.JarFile(jarFile)
+                            def entries = jarStream.entries()
+                            
+                            def newEntries = [:]
+                            def entryNames = []
+                            while (entries.hasMoreElements()) {
+                                def entry = entries.nextElement()
+                                def name = entry.name
+                                def is = jarStream.getInputStream(entry)
+                                def bytes = is.bytes
+                                entryNames.add(name)
+                                
+                                // Patch namespace in classTweaker/accessWidener files
+                                if (name.endsWith(".classtweaker") || name.endsWith(".accesswidener")
+                                        || name.endsWith(".enumextension") || name.endsWith(".interfaceinjection")) {
+                                    def content = new String(bytes, "UTF-8")
+                                    def patched = content.replaceAll(/^([a-zA-Z]+)\t(v\d+)\tnamed\n/, { all, type, ver -> "${type}\t${ver}\tofficial\n" })
+                                    if (patched != content) {
+                                        bytes = patched.getBytes("UTF-8")
+                                        modified = true
+                                    }
+                                }
+                                
+                                newEntries[name] = [entry, bytes]
+                            }
+                            jarStream.close()
+                            
+                            if (modified) {
+                                println "Patching classTweaker namespace in ${jarFile.name}"
+                                def jos = new java.util.jar.JarOutputStream(new java.io.FileOutputStream(tempFile))
+                                entryNames.each { n ->
+                                    def data = newEntries[n]
+                                    def e = new java.util.jar.JarEntry(n)
+                                    e.time = data[0].time
+                                    jos.putNextEntry(e)
+                                    jos.write(data[1])
+                                    jos.closeEntry()
+                                }
+                                jos.close()
+                                
+                                jarFile.delete()
+                                tempFile.renameTo(jarFile)
+                            } else if (tempFile.exists()) {
+                                tempFile.delete()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

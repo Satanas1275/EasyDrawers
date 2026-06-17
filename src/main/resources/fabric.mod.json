@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "easydrawers",
+  "version": "${version}",
+  "name": "EasyDrawers",
+  "description": "A simple storage drawer mod",
+  "authors": ["Satanas1275"],
+  "contact": {
+    "homepage": "https://...",
+    "sources": "https://..."
+  },
+  "license": "CC-BY-NC-4.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.satanas1275.easydrawers.EasyDrawers"],
+    "client": ["com.satanas1275.easydrawers.EasyDrawersClient"]
+  },
+  "mixins": ["easydrawers.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version}",
+    "java": ">=${java_version}"
+  },
+  "recommends": {
+    "fabric-api-base": "*"
+  }
+}
