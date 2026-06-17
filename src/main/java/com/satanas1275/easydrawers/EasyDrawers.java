@@ -31,7 +31,7 @@ public class EasyDrawers implements ModInitializer {
     public static final Block BASIC_DRAWER = new BasicDrawerBlock(
             BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, BASIC_DRAWER_ID))
-                    .strength(2.0f)
+                    .strength(1.0f)
                     .sound(SoundType.WOOD)
     );
 

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "B": "minecraft:barrel"
+  },
+  "result": {
+    "id": "easydrawers:basic_drawer",
+    "count": 1
+  }
+}
