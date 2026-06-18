@@ -1,0 +1,7 @@
+{
+  "parent": "easydrawers:block/drawer",
+  "textures": {
+    "face": "easydrawers:block/birch_face",
+    "other": "easydrawers:block/birch_other"
+  }
+}

@@ -1,5 +1,14 @@
 {
-  "block.easydrawers.basic_drawer": "Drawer",
-  "itemGroup.easydrawers.main": "EasyDrawers",
-  "container.easydrawers.drawer": "Drawer"
+  "block.easydrawers.oak_drawer": "Oak Drawer",
+  "block.easydrawers.spruce_drawer": "Spruce Drawer",
+  "block.easydrawers.birch_drawer": "Birch Drawer",
+  "block.easydrawers.jungle_drawer": "Jungle Drawer",
+  "block.easydrawers.acacia_drawer": "Acacia Drawer",
+  "block.easydrawers.dark_oak_drawer": "Dark Oak Drawer",
+  "block.easydrawers.mangrove_drawer": "Mangrove Drawer",
+  "block.easydrawers.cherry_drawer": "Cherry Drawer",
+  "block.easydrawers.pale_oak_drawer": "Pale Oak Drawer",
+  "block.easydrawers.crimson_drawer": "Crimson Drawer",
+  "block.easydrawers.warped_drawer": "Warped Drawer",
+  "itemGroup.easydrawers.main": "EasyDrawers"
 }

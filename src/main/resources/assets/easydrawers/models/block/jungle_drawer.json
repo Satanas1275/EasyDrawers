@@ -1,0 +1,7 @@
+{
+  "parent": "easydrawers:block/drawer",
+  "textures": {
+    "face": "easydrawers:block/jungle_face",
+    "other": "easydrawers:block/jungle_other"
+  }
+}

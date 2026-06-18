@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "easydrawers:block/crimson_drawer" },
+    "facing=east":  { "model": "easydrawers:block/crimson_drawer", "y": 90 },
+    "facing=south": { "model": "easydrawers:block/crimson_drawer", "y": 180 },
+    "facing=west":  { "model": "easydrawers:block/crimson_drawer", "y": 270 }
+  }
+}

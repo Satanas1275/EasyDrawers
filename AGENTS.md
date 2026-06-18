@@ -10,6 +10,17 @@
 
 ## Progress
 ### Done
+- **playerDestroy** — drops stored items when block is broken (non-creative only)
+- **Comparator output** — `hasAnalogOutputSignal` + `getAnalogOutputSignal` return proportional fill level (0–15 based on count/64)
+- **26.1.2 API fixes** —
+  - `playerWillDestroy` signature: `(Level, BlockPos, BlockState, Player)` returns `BlockState`
+  - `getCloneItemStack` signature: `(LevelReader, BlockPos, BlockState, boolean includeData)`
+  - `appendHoverText` signature: `(ItemStack, TooltipContext, TooltipDisplay, Consumer<Component>, TooltipFlag)`
+  - `CompoundTag.getInt(String)` returns `Optional<Integer>`
+  - `BlockEntity.saveAdditional(ValueOutput)` / `loadAdditional(ValueInput)` are the correct override targets
+  - `onLoad()` removed (doesn't exist in 26.1.2)
+  - Comparator methods (`hasAnalogOutputSignal`, `getAnalogOutputSignal`) are `protected` in `BlockBehaviour`
+  - `Block.destroy(LevelAccessor, BlockPos, BlockState)` is `public` in `Block` class
 - **Vanilla flow for shift+click** — `DrawerBlockItem.useOn` IS called when `isSecondaryUseActive() && !stack.isEmpty()`. Vanilla `ServerPlayerGameMode.useItemOn` skips `BlockState.useItemOn` and calls `ItemStack.useOn` directly. The `mayInteract` permission check in `handleUseItemOn` happens BEFORE this, so **claims mods are respected**.
 - **DrawerBlockItem.useOn handles shift+click** — stores entire held stack (or retrieves 64 on empty hand). Returns `SUCCESS` on client (prevents block placement, triggers packet send), does actual logic on server.
 - **BasicDrawerBlock.useItemOn handles normal click** — stores 1 / retrieves 1 (or 64 if shift+empty-hand, for the empty-hand shift case which goes through `BlockState.useItemOn`)
@@ -25,8 +36,7 @@
 - (none)
 
 ### Todo
-- Add `playerDestroy` / `onDestroyByPlayer` to drop stored items when block is broken
-- Add `ComparatorOutput` override so comparators read drawer fill level
+- (none)
 
 ### Blocked
 - `submitText` remains non-functional — renders nothing even with correct params; `submitNameTag` workaround used instead

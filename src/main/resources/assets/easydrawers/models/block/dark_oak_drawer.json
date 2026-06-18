@@ -1,0 +1,7 @@
+{
+  "parent": "easydrawers:block/drawer",
+  "textures": {
+    "face": "easydrawers:block/dark_oak_face",
+    "other": "easydrawers:block/dark_oak_other"
+  }
+}
