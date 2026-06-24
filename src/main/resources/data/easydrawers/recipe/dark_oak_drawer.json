@@ -6,12 +6,8 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:dark_oak_planks"
-    },
-    "B": {
-      "item": "minecraft:barrel"
-    }
+    "P": "minecraft:dark_oak_planks",
+    "B": "minecraft:barrel"
   },
   "result": {
     "id": "easydrawers:dark_oak_drawer",

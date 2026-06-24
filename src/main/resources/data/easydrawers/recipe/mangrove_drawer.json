@@ -6,12 +6,8 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:mangrove_planks"
-    },
-    "B": {
-      "item": "minecraft:barrel"
-    }
+    "P": "minecraft:mangrove_planks",
+    "B": "minecraft:barrel"
   },
   "result": {
     "id": "easydrawers:mangrove_drawer",

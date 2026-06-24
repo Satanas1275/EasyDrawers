@@ -6,12 +6,8 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:cherry_planks"
-    },
-    "B": {
-      "item": "minecraft:barrel"
-    }
+    "P": "minecraft:cherry_planks",
+    "B": "minecraft:barrel"
   },
   "result": {
     "id": "easydrawers:cherry_drawer",
